@@ -5,9 +5,11 @@
 
 <h1>Profil Siswa</h1>
 
-<p>Nama : {{ $nama }}</p>
-<p>Kelas : {{ $kelas }}</p>
-<p>Sekolah : {{ $sekolah }}</p>
-<p>Absen : {{ $no_absen }}</p>
+<p>Nama : {{ $data_siswa['nama'] }}</p>
+<p>Kelas : {{ $data_siswa['kelas'] }}</p>
+<p>Sekolah : {{ $data_siswa['sekolah'] }}</p>
+<p>Absen : {{ $data_siswa['no_absen'] }}</p>
+
+<h3>Selamat datang, {{ $nama_pengunjung }}</h3>
 
 @endsection
