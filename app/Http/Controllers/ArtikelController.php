@@ -2,62 +2,125 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Artikel;
+use App\Models\Komentar;
 use Illuminate\Http\Request;
 
 class ArtikelController extends Controller
-{  
-    private $data_artikel = [
-        [
-            'id' => 1,
-            'judul' => 'Ini adalah artikel pertama',
-            'penulis' => 'Bima Andika',
-            'tanggal_publikasi' => '01-08-2026',
-            'kategori' => 'Teknologi',
-            'isi' => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride Printing Library in London, took a 1914 Cicero translation and scrambled it to make dummy text for Letraset's Body Type sheets. It has survived not only many decades, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised thanks to these sheets and more recently with desktop publishing software like Aldus PageMaker and Microsoft Word including versions of Lorem Ipsum."
-        ],
-        [
-            'id' => 2,
-            'judul' => 'Ini adalah artikel kedua',
-            'penulis' => 'Putra',
-            'tanggal_publikasi' => '02-08-2026',
-            'kategori' => 'Teknologi',
-            'isi' => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride Printing Library in London, took a 1914 Cicero translation and scrambled it to make dummy text for Letraset's Body Type sheets. It has survived not only many decades, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised thanks to these sheets and more recently with desktop publishing software like Aldus PageMaker and Microsoft Word including versions of Lorem Ipsum."
-        ],
-        [
-            'id' => 3,
-            'judul' => 'Ini adalah artikel ketiga',
-            'penulis' => 'Cakalang',
-            'tanggal_publikasi' => '03-08-2026',
-            'kategori' => 'Teknologi',
-            'isi' => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride Printing Library in London, took a 1914 Cicero translation and scrambled it to make dummy text for Letraset's Body Type sheets. It has survived not only many decades, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised thanks to these sheets and more recently with desktop publishing software like Aldus PageMaker and Microsoft Word including versions of Lorem Ipsum."
-        ]
-    ];
+{
 
-    // menapilkan daftar artikel
+    // menampilkan daftar artikel
+    
     public function index() 
     {
-        $data_artikel = $this->data_artikel;
+        $data_artikel = Artikel::all();
         return view('pages.daftar-artikel', [
             'data_artikel' => $data_artikel
         ]);
     }
 
-    // Create
-    public function create() {}
-
-    // Read
-    public function show($id) 
+    //Create
+    public function create() 
     {
-        $data_artikel = collect($this->data_artikel)->firstWhere('id', $id);
-        
+        return view('pages.tambah-artikel');
+    }
+
+    //Read
+    public function show($id)
+    {
+        $artikel = Artikel::with('komentars')->findOrFail($id);
+
         return view('pages.detail-artikel', [
-            'data_artikel' => [$data_artikel]
+            'data_artikel' => $artikel,
+        ]);
+    }
+    
+
+    //Update & Edit
+    public function edit($id)
+    {
+        $artikel = Artikel::findOrFail($id);
+
+        return view('pages.edit-artikel', [
+            'artikel' => $artikel
         ]);
     }
 
-    // Update
-    public function edit() {}
+    public function update(Request $request, $id) 
+    {
+        $artikel = Artikel::find($id);
 
-    // Delete
-    public function delete() {}
+        $artikel->judul = $request->judul;
+        $artikel->penulis = $request->penulis;
+        $artikel->tanggal_publikasi = $request->tanggal_publikasi;
+        $artikel->kategori = $request->kategori;
+        $artikel->isi = $request->isi;
+
+        $artikel->save();
+
+
+        return redirect('/artikel');
+    }
+
+    //Delete
+    public function destroy($id) 
+    {
+        $artikel = Artikel::findOrFail($id);
+        $artikel->delete();
+
+        return redirect('artikel')
+            ->with('success', 'Artikel berhasil dihapus.');
+    }
+    
+    //Store
+    public function store(Request $request)
+    {
+        // $validatedData = $request->validate([
+        //    'judul' => 'required|min:5|max:255',
+        //    'penulis' => 'required',
+        //    'tanggal_publikasi' => 'required|date',
+        //    'kategori' => 'required',
+        //    'isi' => 'required'
+        // ]);
+
+        // Artikel::create($validatedData);
+
+        // return redirect('/artikel')->with('success', 'Artikel berhasil ditambahkan!');
+        Artikel::create([
+            'judul' => $request->judul,
+            'penulis' => $request->penulis,
+            'tanggal_publikasi' => $request->tanggal_publikasi,
+            'kategori' => $request->kategori,
+            'isi' => $request->isi
+        ]);
+
+        return redirect('/artikel');
+    }
+
+    // Komentar
+    public function kirimKomentar(Request $request, $id)
+    {
+        $artikel = Artikel::findOrFail($id);
+
+        Komentar::create([
+            'artikel_id' => $artikel->id,
+            'nama' => $request->nama,
+            'komentar' => $request->komentar,
+        ]);
+
+        return redirect('/artikel/' . $id)
+            ->with('success', 'Komentar berhasil ditambahkan.');
+    }
+
+    public function destroyKomentar($id)
+    {
+        $komentar = Komentar::findOrFail($id);
+        $artikel_id = $komentar->artikel_id;
+
+        $komentar->delete();
+
+        return redirect('/artikel/' . $artikel_id)
+            ->with('success', 'Komentar berhasil dihapus.');
+    }
+
 }

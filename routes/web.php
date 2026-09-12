@@ -14,4 +14,18 @@ Route::get('/tentang', [TentangController::class, 'index'] );
 
 // Routing untuk CRUD artikel
 Route::get('/artikel', [ArtikelController::class, 'index'] );
-Route::get('/artikel/{id}', [ArtikelController::class, 'show'] );
+
+Route::get('/artikel/tambah', [ArtikelController::class, 'create']);
+Route::post('/artikel', [ArtikelController::class, 'store']);
+
+Route::get('/artikel/{id}/edit', [ArtikelController::class, 'edit']);
+Route::put('/artikel/{id}', [ArtikelController::class, 'update']);
+
+Route::delete('/artikel/{id}', [ArtikelController::class, 'destroy']);
+
+// Komentar
+Route::post('/artikel/{id}/komentar', [ArtikelController::class, 'kirimKomentar']);
+Route::delete('/komentar/{id}', [ArtikelController::class, 'destroyKomentar']);
+
+// Untuk Menampilkan
+Route::get('/artikel/{id}', [ArtikelController::class, 'show']);

@@ -1,28 +1,91 @@
 @extends('layout.app')
-@section('judul-tab', 'Halaman Profil')
+@section('judul-tab', 'Detail Artikel')
 
 @section('artikel')
 
-@forelse ($data_artikel as $artikel)
+<div class="container-detail-artikel">
 
-<div class="box-artikel">
-    <h3>{{ $artikel['judul'] }}</h3>
+    <h3>{{ $data_artikel->judul }}</h3>
+
     <p>
-        Nama Penulis: {{ $artikel['penulis'] }}
+        Nama Penulis: {{ $data_artikel->penulis }}
         <br>
-        Kategori: {{ $artikel['kategori'] }}
+        Kategori: {{ $data_artikel->kategori }}
+        <br>
+        Tanggal Publikasi: {{ $data_artikel->tanggal_publikasi }}
     </p>
+
+    <hr>
+
     <p>
-        {{ $artikel['isi'] }}
+        {{ $data_artikel->isi }}
     </p>
-    <p>
-        <a href="/artikel">Kembali ke Daftar Artikel</a>
+
+    <hr>
+
+    <h3>Tambah Komentar</h3>
+
+    <form action="/artikel/{{ $data_artikel->id }}/komentar" method="POST">
+
+        @csrf
+
+        <div>
+            <label>Nama</label>
+            <input type="text" name="nama" required>
+        </div>
+
+        <div>
+            <label>Komentar</label>
+            <textarea name="komentar" required></textarea>
+        </div>
+
+        <button type="submit">
+            Kirim Komentar
+        </button>
+
+    </form>
+
+    <hr>
+
+    <h3>Komentar</h3>
+
+    @if(session('success'))
+        <p>{{ session('success') }}</p>
+    @endif
+
+    @forelse($data_artikel->komentars as $komentar)
+
+        <div class="komentar">
+            <strong>{{ $komentar->nama }}</strong>
+
+            <p>
+                {{ $komentar->komentar }}
+            </p>
+            <small>
+                {{ $komentar->created_at->format('d M Y H:i') }}
+            </small>
+
+            <form action="/komentar/{{ $komentar->id }}" method="POST" class="hapus-komentar">
+                @csrf
+                @method('DELETE')
+
+                <button type="submit" onclick="return confirm('Apakah Anda yakin ingin menghapus komentar ini?')">
+                    Hapus
+                </button>
+            </form>
+        </div>
+
+    @empty
+
+        <p>Belum ada komentar.</p>
+
+    @endforelse
+
+    <p class="kembali-detail">
+        <a href="/artikel">Kembali</a>
     </p>
+
 
 </div>
-@empty
-<p>Belum ada artikel yang tersedia.</p>
-@endforelse
 
-
-@endsection 
+@endsection

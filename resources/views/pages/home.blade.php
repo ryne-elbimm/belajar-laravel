@@ -6,6 +6,6 @@
 <!-- konten utama -->
 <h1>Selamat Datang di Website Profil Saya</h1>
 
-<p>{{ $home }}</p>
+<p>Selamat Datang di Halaman Home</p>
 
 @endsection

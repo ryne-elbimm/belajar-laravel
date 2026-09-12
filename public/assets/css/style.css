@@ -12,7 +12,7 @@ body {
 /* Header */
 header {
     background: linear-gradient(180deg, #e3f2fd 0%, #bbdefb 100%);
-    color: #0d47a1;
+    color: #0c5fdb;
     text-align: center;
     box-shadow: 0 2px 10px rgba(21, 101, 192, 0.15);
 }
@@ -22,13 +22,6 @@ header h1 {
     font-weight: 600;
     letter-spacing: 0.5px;
     padding: 18px 20px 10px;
-}
-
-header h1::after {
-    content: "|";
-    margin-left: 10px;
-    color: #64b5f6;
-    font-weight: 300;
 }
 
 header ul {
@@ -57,9 +50,209 @@ header ul li a:hover {
     transform: translateY(-2px);
 }
 
-/* Artikel */
-.box-artikel {
-    margin-bottom: 20px;
+
+/* Daftar Artikel */
+.container-artikel {
+    padding: 25px;
+}
+
+.container-artikel > div:first-child {
+    margin-bottom: 15px;
+}
+
+.container-artikel a {
+    color: #1254ad;
+}
+
+.table-artikel {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+}
+
+.table-artikel th {
+    background-color: #42a5f5;
+    color: white;
+    padding: 10px;
+    text-align: left;
+}
+
+.table-artikel td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.table-artikel tr:hover {
+    background-color: #f0f7ff;
+}
+
+.table-artikel button {
+    cursor: pointer;
+}
+
+
+/* Detail Artikel */
+.container-detail-artikel {
+    width: 700px;
+    max-width: 90%;
+    margin: 30px auto;
+    padding: 25px;
+    background-color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.container-detail-artikel h3 {
+    color: #0066ff;
+    margin-bottom: 15px;
+}
+
+.container-detail-artikel p {
+    line-height: 1.6;
+}
+
+.container-detail-artikel hr {
+    border: 0;
+    border-top: 1px solid #ddd;
+    margin: 20px 0;
+}
+
+.kembali-detail {
+    margin-top: 20px;
+    
+}
+
+
+/* Form Komentar */
+.container-detail-artikel form {
+    margin-top: 15px;
+}
+
+.container-detail-artikel label {
+    display: block;
+    margin-bottom: 5px;
+    color: #0d47a1;
+}
+
+.container-detail-artikel input,
+.container-detail-artikel textarea {
+    width: 50%;
+    padding: 9px;
+    margin-bottom: 12px;
+    border: 1px solid #90caf9;
+    font-family: inherit;
+}
+
+.container-detail-artikel textarea {
+    height: 75px;
+    resize: vertical;
+}
+
+.container-detail-artikel button {
+    padding: 10px 18px;
+    background-color: #1254ad;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.container-detail-artikel button:hover {
+    background-color: #0d438d;
+}
+
+/* Tombol Kembali */
+.form-tambah button,
+.tmbl-di-edit button,
+.form-tambah a,
+.tmbl-di-edit a,
+.kembali-detail a{
+    display: inline-block;
+    margin-top: 15px;
+    padding: 6px 16px;
+    background-color: #6e6e6e;
+    color: white;
+    border: none;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 400;
+    transition: 0.2s;
+}
+
+.kembali-detail a:hover {
+    background-color: #636363;
+}
+
+
+/* Komentar */
+.komentar {
+    padding: 12px;
+    margin-bottom: 15px;
+    background-color: #eef7ff;
+    border-left: 3px solid #42a5f5;
+}
+
+.komentar strong {
+    color: #1254ad;
+}
+
+.hapus-komentar {
+    margin-top: 5px !important;
+}
+
+.hapus-komentar button {
+    background-color: #d62828;
+    padding: 6px 12px;
+}
+
+.hapus-komentar button:hover {
+    background-color: #b71c1c;
+}
+
+
+/* Form Tambah & Edit */
+.form-tambah {
+    background-color: white;
+    padding: 20px;
+    max-width: 600px;
+    margin: 20px auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-tambah h1 {
+    margin-bottom: 18px;
+    text-align: center;
+    color: #0066ff;
+    font-size: 2rem;
+}
+
+.form-tambah h2 {
+    color: #0d47a1;
+}
+
+.form-tambah label {
+    display: block;
+    color: #0d47a1;
+}
+
+.form-tambah input,
+.form-tambah select,
+.form-tambah textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 8px;
+    border: 1px solid #90caf9;
+    font-family: inherit;
+}
+
+.form-tambah input:focus,
+.form-tambah select:focus,
+.form-tambah textarea:focus {
+    border-color: #42a5f5;
+    outline: none;
+}
+
+.form-tambah button,
+.tmbl-di-edit button {
+    background-color: #0d47a1;
 }
 
 
